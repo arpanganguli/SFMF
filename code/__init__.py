@@ -3,6 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from datetime import datetime
 import pandas_datareader as pdr
+from pandas_datareader import data
 
 
 class ImportedDataframe:
@@ -24,18 +25,15 @@ class ImportedDataframe:
         imported_dataframe = pd.read_sql(sql=query_string, con=_engine)
         return imported_dataframe
 
-    def download_historical_equity_returns(self, ticker, start_year, start_month, start_date, end_year, end_month, end_date):
+    def download_historical_equity_returns(self, ticker, source, start_date, end_date):
         """Download historical equity returns to estimate factor sensitivity.
 
         Args:
             ticker ([string]): ticker of the equity who's historical return needs to be downloaded.
-            start_year ([YYYY]): the year from which you want the data to start downloading.
-            start_month ([MM]): the month from which you want the data to start downloading.
-            start_date ([DD]): the date from which you want the data to start downloading.
-            end_year ([YYY]): the year at which you want the data to end downloading.
-            end_month ([MM]): the month at which you want the data to end downloading.
-            end_date ([DD]): the date at which you want the data to end downloading.
+            source ([string]): the source from where you want the data to be downloaded. E.g. Yahoo! Finance, Google Finance, etc.
+            start_date ([YYYY-MM-DD]): the date from which you want the data to start downloading.
+            end_date ([YYYY-MM-DD]): the date at which you want the data to end downloading.
         """
-        ticker_dataframe = pdr.get_data_yahoo(symbols=ticker, start=datetime(
-            start_year, start_month, start_date), end=datetime(end_year, end_month, end_date))
+        ticker_dataframe = data.DataReader(
+            ticker, source, start_date, end_date)
         return ticker_dataframe
