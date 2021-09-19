@@ -48,5 +48,8 @@ for i in range(simulations):
 
 plt.figure(figsize=(25, 10))
 plt.hist(PORTFOLIO_LOSS, bins=100)
-plt.show()
+plt.xlabel('Portfolio Loss')
+plt.ylabel('Frequency')
+plt.title('Portfolio Loss Distribution')
 plt.savefig(os.path.join(HOME, 'export', 'portfolio_loss_distribution.png'))
+plt.show()
