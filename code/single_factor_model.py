@@ -14,3 +14,6 @@ query_string_RSqSens = "SELECT * FROM RSqSens"
 PortfolioData = pd.read_sql(sql=query_string_PortfolioData, con=engine)
 CovarianceMatrix = pd.read_sql(sql=query_string_CovarianceMatrix, con=engine)
 RSqSens = pd.read_sql(sql=query_string_RSqSens, con=engine)
+
+# view portfolio data
+print(PortfolioData.head())
