@@ -26,10 +26,10 @@ df = PortfolioData.copy()
 # Maximum Likelihood Method
 
 # Standardised return of each sector
-
 Banks_standardised_returns = scale(Banks['Change'])
 Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
 REIT_standardised_returns = scale(REIT['Change'])
+
 
 # Calculating factor sensitivities for each sector
 
@@ -49,6 +49,23 @@ df['Factor_Sensitivity_MLE'] = np.select(conditions, choices)
 
 exponential = np.exp(-50 * pd.to_numeric(df['PD']))
 common_fraction = (1 - exponential) / (1 - np.exp(-50))
-df['Factor_Sensitivity_PD'] = (
+df['Factor_Sensitivity_PD_Standard'] = (
     0.12 * common_fraction) + (0.24 * (1 - common_fraction))
-print(df.head(10))
+
+# Probabilty of Default Method assuming minimum correlation of [0.12, 0.24] for banks, [0.03, 0.16] for retail (consumer goods) and [0.12, 0.3] for real estate
+
+exponential = np.exp(-50 * pd.to_numeric(df['PD']))
+common_fraction = (1 - exponential) / (1 - np.exp(-50))
+Banks_PD_custom_w_i = (0.12 * common_fraction) + (0.24 * (1 - common_fraction))
+Consumer_Goods_PD_custom_w_i = (0.03 * common_fraction) + \
+    (0.16 * (1 - common_fraction))
+REIT_PD_custom_w_i = (0.12 * common_fraction) + (0.3 * (1 - common_fraction))
+
+choices = [Banks_PD_custom_w_i,
+           Consumer_Goods_PD_custom_w_i, REIT_PD_custom_w_i]
+conditions = [df['Sector'] == 'Banks', df['Sector']
+              == 'Consumer', df['Sector'] == 'Real Estate']
+df['Factor_Sensitivity_PD_Custom'] = np.select(conditions, choices)
+
+df.drop(df.index[100:999], inplace=True)
+print(df)
