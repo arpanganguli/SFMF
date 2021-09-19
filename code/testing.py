@@ -1,13 +1,9 @@
-from pandas_datareader import data
-import matplotlib.pyplot as plt
+import requests
 import pandas as pd
-# Define the instruments to download. We would like to see Apple, Microsoft and the S&P500 index.
-tickers = ['^FTSE']
 
-# We would like all available data from 01/01/2000 until 12/31/2016.
-start_date = '2011-01-01'
-end_date = '2019-12-31'
-
-# User pandas_reader.data.DataReader to load the desired data. As simple as that.
-panel_data = data.DataReader('^GSPC', 'yahoo', start_date, end_date)
-print(panel_data)
+url = 'https://uk.investing.com/indices/ftse-350-food-producers-tr-historical-data'
+html = requests.get(url).content
+df_list = pd.read_html(html)
+df = df_list[-1]
+print(df)
+df.to_csv('my data.csv')
