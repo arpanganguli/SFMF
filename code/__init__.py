@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from datetime import datetime
 import pandas_datareader as pdr
 from pandas_datareader import data
+from numpy.random import normal
 
 
 class ImportedDataframe:
@@ -37,3 +38,14 @@ class ImportedDataframe:
         ticker_dataframe = data.DataReader(
             ticker, source, start_date, end_date)
         return ticker_dataframe
+
+
+def generate_standard_normal_rv(x):
+    """This function generates the standard normal random variable for the lenght of x
+
+    Args:
+        x ([array]): input array.
+    """
+
+    N = normal(loc=0.0, scale=1.0, size=len(x))
+    return N
