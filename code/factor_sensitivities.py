@@ -41,9 +41,9 @@ REIT_standardised_returns = scale(REIT['Change'])
 
 
 # Calculating factor sensitivities for Banks
-Banks_standardised_returns = scale(Banks['Change'])
-
 n_iter = 10_000
+
+Banks_standardised_returns = scale(Banks['Change'])
 w_Banks_list = list()
 
 for i in range(n_iter):
@@ -61,13 +61,10 @@ for i in range(n_iter):
 
     w_Banks_list.append(x)
 
-
 Banks_MLE_w_i = np.mean(w_Banks_list)
 
 # Calculating factor sensitivities for Consumer Goods
 Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
-
-n_iter = 10_000
 w_Consumer_Goods_list = list()
 
 for i in range(n_iter):
@@ -90,14 +87,10 @@ for i in range(n_iter):
 
     w_Consumer_Goods_list.append(x)
 
-
 Consumer_Goods_MLE_w_i = np.mean(w_Consumer_Goods_list)
-
 
 # Calculating factor sensitivities for Banks
 REIT_standardised_returns = scale(REIT['Change'])
-
-n_iter = 10_000
 w_REIT_list = list()
 
 for i in range(n_iter):
@@ -115,7 +108,6 @@ for i in range(n_iter):
 
     w_REIT_list.append(x)
 
-
 REIT_MLE_w_i = np.mean(w_REIT_list)
 
 # Adding factor sensitivities to dataframe
@@ -126,7 +118,6 @@ conditions = [df['Sector'] == 'Banks', df['Sector']
 df['Factor_Sensitivity_MLE'] = np.select(conditions, choices)
 
 # ==============================================================================================================================================
-
 # Probabilty of Default Method assuming minimum correlation of 0.12 and maximum correlation of 0.24 - (0.12*((1 - np.exp(-50*df['PD'])) / (1 - np.exp(-50)))) + (0.24 * (1 - (1 - np.exp(-50*df['PD'])/(1 - np.exp(-50)))))
 
 exponential = np.exp(-50 * pd.to_numeric(df['PD']))
@@ -135,7 +126,6 @@ df['Factor_Sensitivity_PD_Standard'] = (
     0.12 * common_fraction) + (0.24 * (1 - common_fraction))
 
 # ==============================================================================================================================================
-
 # Probabilty of Default Method assuming minimum correlation of [0.12, 0.24] for banks, [0.03, 0.16] for retail (consumer goods) and [0.12, 0.3] for real estate
 
 exponential = np.exp(-50 * pd.to_numeric(df['PD']))
