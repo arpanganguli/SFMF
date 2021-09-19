@@ -4,6 +4,7 @@ import pandas as pd
 from numpy.random import normal
 from scipy.stats import norm
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 HOME = os.getcwd()
@@ -47,9 +48,11 @@ for i in range(simulations):
     PORTFOLIO_LOSS.append(df['Loss'].sum())
 
 plt.figure(figsize=(25, 10))
-plt.hist(PORTFOLIO_LOSS, bins=100)
+# plt.hist(PORTFOLIO_LOSS, bins=100)
+sns.distplot(PORTFOLIO_LOSS, hist=True, kde=True, bins=100,
+             color='darkblue',  hist_kws={'edgecolor': 'black'}, kde_kws={'linewidth': 4})
 plt.xlabel('Portfolio Loss')
-plt.ylabel('Frequency')
+plt.ylabel('Density')
 plt.title('Portfolio Loss Distribution')
 plt.savefig(os.path.join(HOME, 'export', 'portfolio_loss_distribution.png'))
 plt.show()
