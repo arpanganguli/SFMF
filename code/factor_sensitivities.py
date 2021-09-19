@@ -11,6 +11,9 @@ from scipy import stats
 from scipy.optimize import minimize
 from random import uniform
 import matplotlib.pyplot as plt
+import os
+
+HOME = os.getcwd()
 
 # import relevant data
 
@@ -40,7 +43,7 @@ REIT_standardised_returns = scale(REIT['Change'])
 # Calculating factor sensitivities for Banks
 Banks_standardised_returns = scale(Banks['Change'])
 
-n_iter = 1_000
+n_iter = 10_000
 w_Banks_list = list()
 
 for i in range(n_iter):
@@ -64,7 +67,7 @@ Banks_MLE_w_i = np.mean(w_Banks_list)
 # Calculating factor sensitivities for Consumer Goods
 Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
 
-n_iter = 1_000
+n_iter = 10_000
 w_Consumer_Goods_list = list()
 
 for i in range(n_iter):
@@ -94,7 +97,7 @@ Consumer_Goods_MLE_w_i = np.mean(w_Consumer_Goods_list)
 # Calculating factor sensitivities for Banks
 REIT_standardised_returns = scale(REIT['Change'])
 
-n_iter = 1_000
+n_iter = 10_000
 w_REIT_list = list()
 
 for i in range(n_iter):
@@ -149,4 +152,4 @@ conditions = [df['Sector'] == 'Banks', df['Sector']
 df['Factor_Sensitivity_PD_Custom'] = np.select(conditions, choices)
 
 df.drop(df.index[100:999], inplace=True)
-print(df)
+df.to_csv(os.path.join(HOME, 'export', 'factor_sensitivities.csv'))
