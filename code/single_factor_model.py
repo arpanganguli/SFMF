@@ -1,9 +1,11 @@
 """This module generates the following - 
        1. Portfolio loss based on the Vasicek Single Factor Model;
        2. Plot of the portfolio loss distribution;
-       3. Value-at-Risk for 95% and 99% confidence intervals.
+       3. Value-at-Risk (VaR) for 90% and 99.9% confidence intervals;
+       4. Expected Shortfall(ES) for 90% and 99.9% confidence intervals.
     """
 # ==============================================================================================================================================
+
 # import relevant packages and files
 import os
 import numpy as np
@@ -22,7 +24,7 @@ df = pd.read_csv('export/factor_sensitivities.csv', index_col=0)
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 Z = normal(loc=0.0, scale=1.0)
-simulations = 10_000
+simulations = 50_000
 
 for i in range(simulations):
 
@@ -89,7 +91,7 @@ plt.axvline(ES_999)
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (10,000 simulations)')
+plt.title('Portfolio Loss Distribution (50,000 simulations)')
 plt.savefig(os.path.join(HOME, 'export',
-            'portfolio_loss_distribution_10000.png'))
+            'portfolio_loss_distribution_50000.png'))
 plt.show()
