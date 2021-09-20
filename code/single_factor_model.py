@@ -22,7 +22,7 @@ df = pd.read_csv('export/factor_sensitivities.csv', index_col=0)
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 Z = normal(loc=0.0, scale=1.0)
-simulations = 100
+simulations = 10_000
 
 for i in range(simulations):
 
@@ -89,7 +89,7 @@ plt.axvline(ES_999)
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (100 simulations)')
+plt.title('Portfolio Loss Distribution (10,000 simulations)')
 plt.savefig(os.path.join(HOME, 'export',
-            'portfolio_loss_distribution_100.png'))
+            'portfolio_loss_distribution_10000.png'))
 plt.show()
