@@ -23,7 +23,7 @@ HOME = os.getcwd()
 df = pd.read_csv('export/factor_sensitivities.csv', index_col=0)
 covariance_matrix = ImportedDataframe().import_sql_data(
     'SFMF/data/database.db', 'SELECT * FROM CovarianceMatrix')
+covariance_matrix.drop(covariance_matrix.index[3:999], inplace=True)
+print(covariance_matrix)
 
 # Cholesky decomposition of the covariance matrix
-
-lower = cholesky()
