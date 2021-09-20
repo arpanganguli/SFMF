@@ -9,7 +9,8 @@ from sqlalchemy import create_engine
 from datetime import datetime
 import pandas_datareader as pdr
 from pandas_datareader import data
-from numpy.random import normal
+import numpy as np
+from numpy.random import normal, uniform
 
 
 class ImportedDataframe:
@@ -59,9 +60,22 @@ def generate_standard_normal_rv(x):
 
 
 def generate_standard_normal_polar(n):
-    """This function generates 2n standard normal random variables
+    """This function generates 2n standard normal random variables. This approach reduces the amount of time required to generate the standard normal random variables. This is useful when performing a lot of simulations which can computationally expensive.
 
     Args:
         n ([positive integer]): half of the number of variables to generate.
     """
-    U1 =
+    W = 10
+    list_of_numbers = list()
+    for num in range(n):
+        while W < 1:
+            U1 = uniform()
+            U2 = uniform()
+            V1 = 2*U1 - 1
+            V2 = 2*U2 - 2
+            W = pow(V1, 2) + pow(V2, 2)
+        Z1 = V1*np.sqrt((-2*np.log(W))/W)
+        Z2 = V2*np.sqrt((-2*np.log(W))/W)
+        list_of_numbers.append(Z1)
+        list_of_numbers.append(Z2)
+    return list_of_numbers
