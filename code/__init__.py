@@ -1,3 +1,8 @@
+"""The aim of this module is to create classes and functions that will be imported into other modules.
+"""
+
+# import relevant packages
+
 import os
 import pandas as pd
 from sqlalchemy import create_engine
@@ -8,6 +13,8 @@ from numpy.random import normal
 
 
 class ImportedDataframe:
+    """This class enables importing data from an SQL database as well as from online resources like Yahoo! Finance. 
+    """
 
     def __init__(self):
         """Initialising class.
@@ -41,7 +48,7 @@ class ImportedDataframe:
 
 
 def generate_standard_normal_rv(x):
-    """This function generates the standard normal random variable for the lenght of x
+    """This function generates the standard normal random variable for the length of x
 
     Args:
         x ([array]): input array.
@@ -49,3 +56,12 @@ def generate_standard_normal_rv(x):
 
     N = normal(loc=0.0, scale=1.0, size=len(x))
     return N
+
+
+def generate_standard_normal_polar(n):
+    """This function generates 2n standard normal random variables
+
+    Args:
+        n ([positive integer]): half of the number of variables to generate.
+    """
+    U1 =
