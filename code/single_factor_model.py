@@ -22,7 +22,7 @@ df = pd.read_csv('export/factor_sensitivities.csv', index_col=0)
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 Z = normal(loc=0.0, scale=1.0)
-simulations = 100_000
+simulations = 1000
 
 for i in range(simulations):
 
@@ -56,12 +56,24 @@ for i in range(simulations):
 
 # ==============================================================================================================================================
 
-# Calculating Value-at-Risk (VaR) at 95% and 99% confidence intervals
+# Calculating Value-at-Risk (VaR) and Expected Shortfall (ES) at 95% and 99% confidence intervals
 
-VaR_95 = np.percentile(PORTFOLIO_LOSS, 95)
-VaR_99 = np.percentile(PORTFOLIO_LOSS, 99)
+VaR_90 = np.percentile(PORTFOLIO_LOSS, 90)
+VaR_i = 0
+steps_i = np.linspace(90, 100, 10_000)
+for i in steps_i:
+    VaR_i += (np.percentile(PORTFOLIO_LOSS, i))
+ES_90 = VaR_i/10_000
 
+VaR_999 = np.percentile(PORTFOLIO_LOSS, 99.9)
+VaR_j = 0
+steps_j = np.linspace(99.9, 100, 10_000)
+for j in steps_j:
+    VaR_j += (np.percentile(PORTFOLIO_LOSS, j))
+ES_999 = VaR_j/10_000
 # ==============================================================================================================================================
+
+print(PORTFOLIO_LOSS)
 
 # Plotting the portfolio loss distribution
 
@@ -69,13 +81,17 @@ plt.figure(figsize=(25, 10))
 # plt.hist(PORTFOLIO_LOSS, bins=100)
 sns.histplot(PORTFOLIO_LOSS, kde=True, bins=100,
              color='darkblue')
-plt.axvline(VaR_95)
-plt.text(VaR_95, -0.4, 'VaR95', rotation=90)
-plt.axvline(VaR_99)
-plt.text(VaR_99, -0.4, 'VaR99', rotation=90)
+plt.axvline(VaR_90)
+plt.text(VaR_90, -0.4, 'VaR 90%', rotation=90)
+plt.axvline(VaR_999)
+plt.text(VaR_999, -0.4, 'VaR 99.9%', rotation=90)
+plt.axvline(ES_90)
+plt.text(ES_90, -0.4, 'ES 90%', rotation=90)
+plt.axvline(ES_999)
+plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
-plt.ylabel('Density')
-plt.title('Portfolio Loss Distribution (100,000 simulations)')
+plt.ylabel('Frequency')
+plt.title('Portfolio Loss Distribution (1,000 simulations)')
 plt.savefig(os.path.join(HOME, 'export',
-            'portfolio_loss_distribution_100000.png'))
+            'portfolio_loss_distribution_1000.png'))
 plt.show()
