@@ -52,8 +52,6 @@ for i in range(simulations):
 
     df['Loss'] = loss
 
-    df.to_csv(os.path.join(HOME, 'export', 'defaults.csv'))
-
     PORTFOLIO_LOSS.append(df['Loss'].sum())
 
 # ==============================================================================================================================================
