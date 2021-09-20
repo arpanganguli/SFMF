@@ -40,11 +40,17 @@ Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
 REIT_standardised_returns = scale(REIT['Change'])
 
 
-# Calculating factor sensitivities for Banks
+# Calculating factor sensitivities for Banks, Consumer Goods and REITs
 n_iter = 10_000
 
 Banks_standardised_returns = scale(Banks['Change'])
 w_Banks_list = list()
+
+Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
+w_Consumer_Goods_list = list()
+
+REIT_standardised_returns = scale(REIT['Change'])
+w_REIT_list = list()
 
 for i in range(n_iter):
     def mle_Banks(w_Banks):
@@ -61,13 +67,6 @@ for i in range(n_iter):
 
     w_Banks_list.append(x)
 
-Banks_MLE_w_i = np.mean(w_Banks_list)
-
-# Calculating factor sensitivities for Consumer Goods
-Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
-w_Consumer_Goods_list = list()
-
-for i in range(n_iter):
     def mle_Consumer_Goods(w_Consumer_Goods):
         Z_Consumer_Goods = generate_standard_normal_rv(
             Consumer_Goods_standardised_returns)
@@ -87,13 +86,6 @@ for i in range(n_iter):
 
     w_Consumer_Goods_list.append(x)
 
-Consumer_Goods_MLE_w_i = np.mean(w_Consumer_Goods_list)
-
-# Calculating factor sensitivities for Banks
-REIT_standardised_returns = scale(REIT['Change'])
-w_REIT_list = list()
-
-for i in range(n_iter):
     def mle_REIT(w_REIT):
         Z_REIT = generate_standard_normal_rv(REIT_standardised_returns)
         epsilon_REIT = generate_standard_normal_rv(REIT_standardised_returns)
@@ -108,6 +100,8 @@ for i in range(n_iter):
 
     w_REIT_list.append(x)
 
+Banks_MLE_w_i = np.mean(w_Banks_list)
+Consumer_Goods_MLE_w_i = np.mean(w_Consumer_Goods_list)
 REIT_MLE_w_i = np.mean(w_REIT_list)
 
 # Adding factor sensitivities to dataframe

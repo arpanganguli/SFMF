@@ -56,6 +56,7 @@ for i in range(simulations):
 
     PORTFOLIO_LOSS.append(df['Loss'].sum())
 
+# ==============================================================================================================================================
 # Plotting the portfolio loss distribution
 plt.figure(figsize=(25, 10))
 # plt.hist(PORTFOLIO_LOSS, bins=100)
@@ -68,7 +69,6 @@ plt.savefig(os.path.join(HOME, 'export', 'portfolio_loss_distribution.png'))
 plt.show()
 
 # ==============================================================================================================================================
-
 # Calculating Value-at-Risk (VaR) at 95% and 99% confidence intervals
 alpha_95 = 0.95
 alpha_99 = 0.99
