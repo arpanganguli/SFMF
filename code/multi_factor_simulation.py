@@ -117,7 +117,7 @@ for i in range(simulations):
 
 print(PORTFOLIO_LOSS)
 
-""" # ==============================================================================================================================================
+# ==============================================================================================================================================
 
 # Calculating Value-at-Risk (VaR) and Expected Shortfall (ES) at 95% and 99% confidence intervals
 
@@ -156,4 +156,3 @@ plt.title('Portfolio Loss Distribution (100 simulations) - Multi Factor')
 plt.savefig(os.path.join(HOME, 'export',
             'multi_factor_PLD_100.png'))
 plt.show()
- """
