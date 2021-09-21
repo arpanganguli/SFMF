@@ -15,7 +15,7 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.linalg import cholesky
-from __init__ import ImportedDataframe, generate_standard_normal_polar
+from __init__ import ImportedDataframe, generate_standard_normal_rv
 from numpy.random import normal
 
 
@@ -34,12 +34,12 @@ covariance_matrix.drop(covariance_matrix.columns[0], axis=1, inplace=True)
 # Cholesky decomposition of the covariance matrix
 covariance_array = covariance_matrix.to_numpy()
 lower_cholesky = cholesky(covariance_array, lower=True)
+print(lower_cholesky)
 
 num_of_factors = 3
-simulations = 100
+simulations = 1
 
-# generating random variables that will be used to determine the systematic factors
-sys_factors = list()
+factors_inter = list()
 
 for sim in range(simulations):
     rand_num_list = list()
@@ -49,26 +49,7 @@ for sim in range(simulations):
 
     rand_num_array = np.array(rand_num_list)
     x = np.dot(lower_cholesky, rand_num_array)
-    sys_factors.append(x)
+    factors_inter.append(x)
+    print(rand_num_array)
 
-correl_inter = list()
-for i in range(3):
-    correl_inter.append(covariance_array[i][i])
-
-df['W_Banks'] = correl_inter[0]
-df['W_Consumer_Goods'] = correl_inter[1]
-df['W_Real_Estate'] = correl_inter[2]
-
-df['Z1'] = ""
-df['Z2'] = ""
-df["Z3"] = ""
-
-epsilon = generate_standard_normal_polar(50)
-df["epsilon"] = epsilon
-
-for i in range(len(df)):
-    df['Z1'].loc[i] = sys_factors[i][0]
-    df['Z2'].loc[i] = sys_factors[i][1]
-    df['Z3'].loc[i] = sys_factors[i][2]
-
-print(df.head())
+print(factors_inter)
