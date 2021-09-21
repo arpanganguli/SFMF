@@ -31,7 +31,10 @@ covariance_matrix.drop(covariance_matrix.columns[0], axis=1, inplace=True)
 covariance_array = covariance_matrix.to_numpy()
 L = cholesky(covariance_array, lower=True)
 
-u = generate_standard_normal_polar(500)
+u = generate_standard_normal_polar(1500)
 
-y = np.dot(L, u)
-print(y)
+u_reshape = np.array(u).reshape(3, 1_000)
+
+y = np.dot(L, u_reshape)
+plt.plot(y)
+plt.show()
