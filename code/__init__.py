@@ -68,14 +68,15 @@ def generate_standard_normal_polar(n):
     W = 10
     list_of_numbers = list()
     for num in range(n):
-        while W < 1:
-            U1 = uniform()
-            U2 = uniform()
+        while W > 1:
+            U1 = uniform(low=0.001)
+            U2 = uniform(low=0.001)
             V1 = 2*U1 - 1
-            V2 = 2*U2 - 2
+            V2 = 2*U2 - 1
             W = pow(V1, 2) + pow(V2, 2)
         Z1 = V1*np.sqrt((-2*np.log(W))/W)
         Z2 = V2*np.sqrt((-2*np.log(W))/W)
         list_of_numbers.append(Z1)
         list_of_numbers.append(Z2)
+        W = 10
     return list_of_numbers
