@@ -53,11 +53,13 @@ for sim in range(simulations):
 
 correl_inter = list()
 for i in range(3):
-    correl_inter.append(float(covariance_array[i][i])/10.0)
+    correl_inter.append(covariance_array[i][i])
 
-df['W_Banks'] = correl_inter[0]
-df['W_Consumer_Goods'] = correl_inter[1]
-df['W_Real_Estate'] = correl_inter[2]
+choices = [correl_inter[0], correl_inter[1], correl_inter[2]]
+conditions = [df['Sector'] == 'Banks', df['Sector']
+              == 'Consumer', df['Sector'] == 'Real Estate']
+
+df['Factor_Sensitivity'] = np.select(conditions, choices)
 
 df['Z1'] = ""
 df['Z2'] = ""
@@ -71,7 +73,7 @@ for i in range(len(df)):
 epsilon = generate_standard_normal_polar(50)
 df["epsilon"] = epsilon
 
-df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities.csv'))
+df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities_ALITER.csv'))
 
 # ==============================================================================================================================================
 # Monte Carlo simulation
@@ -86,10 +88,10 @@ for i in range(simulations):
     asset_value = list()
     for row in range(len(df)):
         epsilon = normal(loc=0.0, scale=1.0)
-        first_part = df['W_Banks'].loc[row]*df['Z1'].loc[row] + df['W_Consumer_Goods'].loc[row] * \
-            df['Z2'].loc[row] + df['W_Real_Estate'].loc[row]*df['Z3'].loc[row]
-        second_part = np.sqrt(1-(pow(df['W_Banks'].loc[row], 2) + pow(
-            df['W_Consumer_Goods'].loc[row], 2) + pow(df['W_Real_Estate'].loc[row], 2)))*df['epsilon'].loc[row]
+        first_part = np.sqrt(df['Factor_Sensitivity'].loc[row]) * \
+            (df['Z1'].loc[row] + df['Z2'].loc[row] + df['Z3'].loc[row])
+        second_part = np.sqrt(
+            1-df['Factor_Sensitivity'].loc[row]) * df['epsilon'].loc[row]
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
 
