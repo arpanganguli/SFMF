@@ -15,12 +15,12 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
 HOME = os.getcwd()
 
 df = pd.read_csv('export/single_factor_sensitivities.csv', index_col=0)
 
 # ==============================================================================================================================================
+
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 Z = normal(loc=0.0, scale=1.0)
@@ -75,6 +75,7 @@ steps_j = np.linspace(99.9, 100, 10_000)
 for j in steps_j:
     VaR_j += (np.percentile(PORTFOLIO_LOSS, j))
 ES_999 = VaR_j/10_000
+
 # ==============================================================================================================================================
 
 # Plotting the portfolio loss distribution

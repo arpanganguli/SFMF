@@ -34,6 +34,7 @@ REIT = ImportedDataframe().import_sql_data(
 df = PortfolioData.copy()
 
 # ==============================================================================================================================================
+
 # Maximum Likelihood Method
 
 # Standardised return of each sector
@@ -114,6 +115,7 @@ conditions = [df['Sector'] == 'Banks', df['Sector']
 df['Factor_Sensitivity_MLE'] = np.select(conditions, choices)
 
 # ==============================================================================================================================================
+
 # Probabilty of Default Method assuming minimum correlation of 0.12 and maximum correlation of 0.24 - (0.12*((1 - np.exp(-50*df['PD'])) / (1 - np.exp(-50)))) + (0.24 * (1 - (1 - np.exp(-50*df['PD'])/(1 - np.exp(-50)))))
 
 exponential = np.exp(-50 * pd.to_numeric(df['PD']))
@@ -122,6 +124,7 @@ df['Factor_Sensitivity_PD_Standard'] = (
     0.12 * common_fraction) + (0.24 * (1 - common_fraction))
 
 # ==============================================================================================================================================
+
 # Probabilty of Default Method assuming minimum correlation of [0.12, 0.24] for banks, [0.03, 0.16] for retail (consumer goods) and [0.12, 0.3] for real estate
 
 exponential = np.exp(-50 * pd.to_numeric(df['PD']))

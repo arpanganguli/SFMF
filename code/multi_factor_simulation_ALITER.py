@@ -73,6 +73,7 @@ for i in range(len(df)):
 # df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities_ALITER.csv'))
 
 # ==============================================================================================================================================
+
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
@@ -131,6 +132,7 @@ steps_j = np.linspace(99.9, 100, 10_000)
 for j in steps_j:
     VaR_j += (np.percentile(PORTFOLIO_LOSS, j))
 ES_999 = VaR_j/10_000
+
 # ==============================================================================================================================================
 
 # Plotting the portfolio loss distribution
