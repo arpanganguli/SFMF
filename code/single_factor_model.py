@@ -79,7 +79,7 @@ ES_999 = VaR_j/10_000
 
 plt.figure(figsize=(25, 10))
 # plt.hist(PORTFOLIO_LOSS, bins=100)
-sns.histplot(PORTFOLIO_LOSS, kde=True, bins=100,
+sns.histplot(PORTFOLIO_LOSS, kde=True, bins=150,
              color='darkblue')
 plt.axvline(VaR_90, color='green')
 plt.text(VaR_90, -0.4, 'VaR 90%', rotation=90)
@@ -91,7 +91,7 @@ plt.axvline(ES_999, color='red')
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (10,000 simulations)')
+plt.title('Portfolio Loss Distribution (50,000 simulations)')
 plt.savefig(os.path.join(HOME, 'export',
-            'portfolio_loss_distribution_10000.png'))
+            'portfolio_loss_distribution_50000.png'))
 plt.show()
