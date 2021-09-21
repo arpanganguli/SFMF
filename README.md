@@ -6,7 +6,7 @@ The repository is arranged in following directories:
 
 * **code:** contains all the code for simulating both single and multi factor credit risk models.
 
-    * **\___init___.py:** the aim of this module is to create classes and functions that will be imported into other modules.
+    * **\_\_init.py\_\_:** the aim of this module is to create classes and functions that will be imported into other modules.
     * **single_factor_sensitivities.py:** the aim of this module is to calculate factor sensitvity, w_i. This is done using both the Maximum Likelihood Estimation (MLE) technique and calculating it from Probabilty of Default of individual assets.
     * **multi_factor_simulation.py:** This module generates the following -
        1. Portfolio loss based on the Multi Factor Model;
