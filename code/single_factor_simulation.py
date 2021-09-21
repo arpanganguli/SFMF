@@ -24,7 +24,7 @@ df = pd.read_csv('export/single_factor_sensitivities.csv', index_col=0)
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 Z = normal(loc=0.0, scale=1.0)
-simulations = 50_000
+simulations = 100
 
 for i in range(simulations):
 
@@ -55,6 +55,8 @@ for i in range(simulations):
     df['Loss'] = loss
 
     PORTFOLIO_LOSS.append(df['Loss'].sum())
+
+print(PORTFOLIO_LOSS)
 
 # ==============================================================================================================================================
 

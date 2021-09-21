@@ -70,17 +70,14 @@ for i in range(len(df)):
     df['Z2'].loc[i] = sys_factors[i][1]
     df['Z3'].loc[i] = sys_factors[i][2]
 
-epsilon = generate_standard_normal_polar(50)
-df["epsilon"] = epsilon
-
-df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities_ALITER.csv'))
+# df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities_ALITER.csv'))
 
 # ==============================================================================================================================================
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
-simulations = 100
-cols = df.columns.drop(['epsilon', 'Sector'])
+simulations = 10_000
+cols = df.columns.drop(['Sector'])
 df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 
 for i in range(simulations):
@@ -91,7 +88,7 @@ for i in range(simulations):
         first_part = np.sqrt(df['Factor_Sensitivity'].loc[row]) * \
             (df['Z1'].loc[row] + df['Z2'].loc[row] + df['Z3'].loc[row])
         second_part = np.sqrt(
-            1-df['Factor_Sensitivity'].loc[row]) * df['epsilon'].loc[row]
+            1-df['Factor_Sensitivity'].loc[row]) * epsilon
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
 
@@ -117,9 +114,7 @@ for i in range(simulations):
 
     PORTFOLIO_LOSS.append(df['Loss'].sum())
 
-print(PORTFOLIO_LOSS)
-
-""" # ==============================================================================================================================================
+# ==============================================================================================================================================
 
 # Calculating Value-at-Risk (VaR) and Expected Shortfall (ES) at 95% and 99% confidence intervals
 
@@ -154,8 +149,7 @@ plt.axvline(ES_999, color='red')
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (100 simulations) - Multi Factor')
+plt.title('Portfolio Loss Distribution (10,000 simulations) - Multi Factor')
 plt.savefig(os.path.join(HOME, 'export',
-            'multi_factor_PLD_100.png'))
+            'multi_factor_PLD_10000.png'))
 plt.show()
- """
