@@ -36,5 +36,6 @@ u = generate_standard_normal_polar(1500)
 u_reshape = np.array(u).reshape(3, 1_000)
 
 y = np.dot(L, u_reshape)
-plt.plot(y)
+plt.figure()
+sns.histplot(y[1], bins=100, kde=True)
 plt.show()
