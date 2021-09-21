@@ -24,7 +24,7 @@ df = pd.read_csv('export/factor_sensitivities.csv', index_col=0)
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 Z = normal(loc=0.0, scale=1.0)
-simulations = 10_000
+simulations = 50_000
 
 for i in range(simulations):
 
