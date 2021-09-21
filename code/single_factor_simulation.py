@@ -18,7 +18,7 @@ import seaborn as sns
 
 HOME = os.getcwd()
 
-df = pd.read_csv('export/factor_sensitivities.csv', index_col=0)
+df = pd.read_csv('export/single_factor_sensitivities.csv', index_col=0)
 
 # ==============================================================================================================================================
 # Monte Carlo simulation

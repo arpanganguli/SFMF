@@ -138,4 +138,4 @@ conditions = [df['Sector'] == 'Banks', df['Sector']
 df['Factor_Sensitivity_PD_Custom'] = np.select(conditions, choices)
 
 df.drop(df.index[100:999], inplace=True)
-df.to_csv(os.path.join(HOME, 'export', 'factor_sensitivities.csv'))
+df.to_csv(os.path.join(HOME, 'export', 'single_factor_sensitivities.csv'))
