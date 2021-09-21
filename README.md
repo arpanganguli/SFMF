@@ -13,7 +13,7 @@ The repository is arranged in following directories:
        2. Plot of the portfolio loss distribution;
        3. Value-at-Risk (VaR) for 90% and 99.9% confidence intervals;
        4. Expected Shortfall(ES) for 90% and 99.9% confidence intervals.
-    * **multi_factor_simulation_ALITER.py:** This module generates the following (according to the [general multi-factor case](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiNkKrdkZHzAhXYDmMBHWFbB5IQFnoECAUQAQ&url=https%3A%2F%2Fwww.math.kth.se%2Fmatstat%2Fseminarier%2Freports%2FM-exjobb18%2F180601d.pdf&usg=AOvVaw3wwSt6S1zSZxo--_Ij_Yec)) -
+    * **multi_factor_simulation_ALITER.py:** This module generates the following (according to the [general multi-factor case](https://www.math.kth.se/matstat/seminarier/reports/M-exjobb18/180601d.pdf) -
        1. Portfolio loss based on the Multi Factor Model;
        2. Plot of the portfolio loss distribution;
        3. Value-at-Risk (VaR) for 90% and 99.9% confidence intervals;
@@ -52,3 +52,9 @@ Plots from the risk models (≥5,000 simulations):
 * [Real estate returns (Mar 19, 2012 - 31 Dec 2019)](https://uk.investing.com/indices/ftse-allshare-re-invest.---service-historical-data)
 
 **NOTE:** These are all proxy data to represent sector returns.
+## Reference
+* [Consolidating Multi-Factor Models of Systematic Risk with Regulatory Capital](https://www.math.kth.se/matstat/seminarier/reports/M-exjobb18/180601d.pdf)
+* [Credit Risk Modeling using Excel and VBA](https://www.wiley.com/en-gb/Credit+Risk+Modeling+using+Excel+and+VBA%2C+2nd+Edition-p-9780470660928)
+* [Modelling credit risk](https://www.bankofengland.co.uk/-/media/boe/files/ccbs/resources/modelling-credit-risk.pdf?la=en&hash=53B7332226FB2FB1B280B3D643DBB8AFF1FA5F32)
+* [Quantifying Portfolio Credit Risk](https://www.ccruncher.net/ccruncher.pdf)
+* [Quantitative Risk Management](https://press.princeton.edu/books/hardcover/9780691166278/quantitative-risk-management)
