@@ -1,15 +1,11 @@
-"""This module calculates the factor sensitivities for the multi factor model using Cholesky Decomposition.
+"""This module calculates the systematic factor sensitivities for the multi factor model using Cholesky Decomposition.
     """
 # ==============================================================================================================================================
 
 # import relevant packages and files
 import os
 import numpy as np
-import pandas as pd
 from numpy.random import normal
-from scipy.stats import norm
-import matplotlib.pyplot as plt
-import seaborn as sns
 from scipy.linalg import cholesky
 from __init__ import ImportedDataframe, generate_standard_normal_polar
 from numpy.random import normal

@@ -1,4 +1,4 @@
-"""The aim of this module is to create classes and functions that will be imported into other modules.
+"""This module creates classes and functions that will be used by other modules.
 """
 
 # import relevant packages

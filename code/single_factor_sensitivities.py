@@ -1,4 +1,4 @@
-"""The aim of this module is to calculate factor sensitvity, w_i. This is done using both the Maximum Likelihood Estimation (MLE) technique and calculating it from Probabilty of Default of individual assets.
+"""This module calculates the systematic factor sensitivity for the single factor credit risk model. This is done using both the Maximum Likelihood Estimation (MLE) technique and calculating it from Probabilty of Default of individual assets.
     """
 
 # ==============================================================================================================================================
@@ -12,7 +12,6 @@ import pandas as pd
 from scipy import stats
 from scipy.optimize import minimize
 from random import uniform
-import matplotlib.pyplot as plt
 import os
 
 HOME = os.getcwd()

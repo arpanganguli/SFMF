@@ -1,17 +1,13 @@
-"""This module generates the factor sensitivity for the general multi factor model using the general multi factor case.
+"""This module generates the systematic factor sensitivity for the general multi factor model. This too uses the Cholesky Decomposition.
     """
 # ==============================================================================================================================================
 
 # import relevant packages and files
 import os
 import numpy as np
-import pandas as pd
 from numpy.random import normal
-from scipy.stats import norm
-import matplotlib.pyplot as plt
-import seaborn as sns
 from scipy.linalg import cholesky
-from __init__ import ImportedDataframe, generate_standard_normal_polar
+from __init__ import ImportedDataframe
 from numpy.random import normal
 
 

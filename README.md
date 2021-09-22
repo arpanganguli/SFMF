@@ -6,14 +6,16 @@ The repository is arranged in following directories:
 
 * **code:** contains all the code for simulating both single and multi factor credit risk models.
 
-    * **\_\_init.py\_\_:** the aim of this module is to create classes and functions that will be imported into other modules.
-    * **single_factor_sensitivities.py:** the aim of this module is to calculate factor sensitvity, w_i. This is done using both the Maximum Likelihood Estimation (MLE) technique and calculating it from Probabilty of Default of individual assets.
-    * **multi_factor_simulation.py:** This module generates the following -
+    * **\_\_init.py\_\_:** this module creates classes and functions that will be used by other modules.
+    * **single_factor_sensitivities.py:** this module calculates the systematic factor sensitivity for the single factor credit risk model. This is done using both the Maximum Likelihood Estimation (MLE) technique and calculating it from Probabilty of Default of individual assets.
+    * **multi_factor_sensitivities.py:** this module calculates the systematic factor sensitivities for the multi factor model using Cholesky Decomposition.
+    * **multi_factor_simulation.py:** this module generates the following -
        1. Portfolio loss based on the Multi Factor Model;
        2. Plot of the portfolio loss distribution;
        3. Value-at-Risk (VaR) for 90% and 99.9% confidence intervals;
        4. Expected Shortfall(ES) for 90% and 99.9% confidence intervals.
-    * **multi_factor_simulation_ALITER.py:** This module generates the following (according to the [general multi-factor case](https://www.math.kth.se/matstat/seminarier/reports/M-exjobb18/180601d.pdf) -
+    * **multi_factor_sensitivities_ALITER.py:** this module generates the systematic factor sensitivity for the general multi factor model. This too uses the Cholesky Decomposition.
+    * **multi_factor_simulation_ALITER.py:** this module generates the following (according to the [general multi-factor case](https://www.math.kth.se/matstat/seminarier/reports/M-exjobb18/180601d.pdf) -
        1. Portfolio loss based on the Multi Factor Model;
        2. Plot of the portfolio loss distribution;
        3. Value-at-Risk (VaR) for 90% and 99.9% confidence intervals;
