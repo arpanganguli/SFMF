@@ -38,7 +38,6 @@ REIT = ImportedDataframe().import_sql_data(
 
 # Standardised return of each sector
 Banks_standardised_returns = scale(Banks['Change'])
-print(len(Banks_standardised_returns))
 Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
 REIT_standardised_returns = scale(REIT['Change'])
 
@@ -62,8 +61,6 @@ for sim in range(simulations):
     x = np.dot(lower_cholesky, rand_num_array)
     sys_factors.append(x)
 
-print(len(sys_factors))
-
 Z1 = list()
 Z2 = list()
 Z3 = list()
@@ -77,10 +74,6 @@ sys_df = pd.DataFrame(Z1, columns=['Z1'])
 sys_df['Z2'] = np.array(Z2)
 sys_df['Z3'] = np.array(Z3)
 
-print(len(sys_df))
-print(len(Z1))
-print(len(Z2))
-print(len(Z3))
 
 """ correl_inter = list()
 for i in range(3):
