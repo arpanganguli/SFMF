@@ -14,14 +14,73 @@ from numpy.random import normal
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy.linalg import cholesky
+from __init__ import ImportedDataframe, generate_standard_normal_polar
 from numpy.random import normal
+
 
 HOME = os.getcwd()
 
-df = pd.read_csv('export/multi_factor_sensitivities.csv', index_col=0)
+df = ImportedDataframe().import_sql_data(
+    'SFMF/data/database.db', 'SELECT * FROM PortfolioData')
+df.drop(df.index[100:999], inplace=True)
+covariance_matrix = ImportedDataframe().import_sql_data(
+    'SFMF/data/database.db', 'SELECT * FROM CovarianceMatrix')
+covariance_matrix.drop(covariance_matrix.index[3:999], inplace=True)
+covariance_matrix.drop(covariance_matrix.columns[0], axis=1, inplace=True)
 
 # ==============================================================================================================================================
 
+# Cholesky decomposition of the covariance matrix
+covariance_array = covariance_matrix.to_numpy()
+lower_cholesky = cholesky(covariance_array, lower=True)
+
+num_of_factors = 3
+simulations = 100
+
+# generating random variables that will be used to determine the systematic factors
+sys_factors = list()
+
+for sim in range(simulations):
+    rand_num_list = list()
+    for i in range(num_of_factors):
+        rand_num = normal(loc=0.0, scale=1.0)
+        rand_num_list.append(rand_num)
+
+    rand_num_array = np.array(rand_num_list)
+    x = np.dot(lower_cholesky, rand_num_array)
+    sys_factors.append(x)
+
+correl_inter = list()
+for i in range(3):
+    correl_inter.append(float(covariance_array[i][i])/10.0)
+
+choices = [correl_inter[0], correl_inter[1], correl_inter[2]]
+conditions = [df['Sector'] == 'Banks', df['Sector']
+              == 'Consumer', df['Sector'] == 'Real Estate']
+
+df['Factor_Sensitivity'] = np.select(conditions, choices)
+
+
+df['W_Banks'] = correl_inter[0]
+df['W_Consumer_Goods'] = correl_inter[1]
+df['W_Real_Estate'] = correl_inter[2]
+
+df['Z1'] = ""
+df['Z2'] = ""
+df["Z3"] = ""
+
+for i in range(len(df)):
+    df['Z1'].loc[i] = sys_factors[i][0]
+    df['Z2'].loc[i] = sys_factors[i][1]
+    df['Z3'].loc[i] = sys_factors[i][2]
+
+epsilon = generate_standard_normal_polar(50)
+df["epsilon"] = epsilon
+
+df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities.csv'))
+
+# ==============================================================================================================================================
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
@@ -40,6 +99,15 @@ for i in range(simulations):
             df['W_Consumer_Goods'].loc[row], 2) + pow(df['W_Real_Estate'].loc[row], 2)))*df['epsilon'].loc[row]
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
+
+        """ALITER.
+        first_part = np.sqrt(df['Factor_Sensitivity'].loc[row]) * \
+            (df['Z1'].loc[row] + df['Z2'].loc[row] + df['Z3'].loc[row])
+        second_part = np.sqrt(
+            1-df['Factor_Sensitivity'].loc[row]) * epsilon
+        asset_value_i = first_part + second_part
+        asset_value.append(asset_value_i)
+        """
 
     df['Asset_Value'] = asset_value
 
@@ -82,7 +150,6 @@ steps_j = np.linspace(99.9, 100, 10_000)
 for j in steps_j:
     VaR_j += (np.percentile(PORTFOLIO_LOSS, j))
 ES_999 = VaR_j/10_000
-
 # ==============================================================================================================================================
 
 # Plotting the portfolio loss distribution
