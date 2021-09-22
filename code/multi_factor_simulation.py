@@ -75,8 +75,8 @@ for i in range(len(df)):
     df['Z2'].loc[i] = sys_factors[i][1]
     df['Z3'].loc[i] = sys_factors[i][2]
 
-epsilon = generate_standard_normal_polar(50)
-df["epsilon"] = epsilon
+# epsilon = generate_standard_normal_polar(50)
+# df["epsilon"] = epsilon
 
 df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities.csv'))
 
@@ -96,7 +96,7 @@ for i in range(simulations):
         first_part = df['W_Banks'].loc[row]*df['Z1'].loc[row] + df['W_Consumer_Goods'].loc[row] * \
             df['Z2'].loc[row] + df['W_Real_Estate'].loc[row]*df['Z3'].loc[row]
         second_part = np.sqrt(1-(pow(df['W_Banks'].loc[row], 2) + pow(
-            df['W_Consumer_Goods'].loc[row], 2) + pow(df['W_Real_Estate'].loc[row], 2)))*df['epsilon'].loc[row]
+            df['W_Consumer_Goods'].loc[row], 2) + pow(df['W_Real_Estate'].loc[row], 2)))*epsilon
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
 
