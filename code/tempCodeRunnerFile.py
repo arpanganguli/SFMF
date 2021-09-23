@@ -38,46 +38,10 @@ REIT = ImportedDataframe().import_sql_data(
 
 # Standardised return of each sector
 Banks_standardised_returns = scale(Banks['Change'])
-print(len(Banks_standardised_returns))
 Consumer_Goods_standardised_returns = scale(Consumer_Goods['Change'])
 REIT_standardised_returns = scale(REIT['Change'])
 
-# Cholesky decomposition of the covariance matrix
-covariance_array = covariance_matrix.to_numpy()
-lower_cholesky = cholesky(covariance_array, lower=True)
+standardised_returns = np.concatenate([
+    Banks_standardised_returns, Consumer_Goods_standardised_returns, REIT_standardised_returns])
 
-num_of_factors = 3
-simulations = 2020
-
-# generating random variables that will be used to determine the systematic factors
-sys_factors = list()
-
-for sim in range(simulations):
-    rand_num_list = list()
-    for i in range(num_of_factors):
-        rand_num = normal(loc=0.0, scale=1.0)
-        rand_num_list.append(rand_num)
-
-    rand_num_array = np.array(rand_num_list)
-    x = np.dot(lower_cholesky, rand_num_array)
-    sys_factors.append(x)
-
-print(len(sys_factors))
-
-Z1 = list()
-Z2 = list()
-Z3 = list()
-
-for i in range(len(Banks_standardised_returns)):
-    Z1.append(sys_factors[i][0])
-    Z2.append(sys_factors[i][1])
-    Z3.append(sys_factors[i][2])
-
-sys_df = pd.DataFrame(Z1, columns=['Z1'])
-sys_df['Z2'] = np.array(Z2)
-sys_df['Z3'] = np.array(Z3)
-
-print(len(sys_df))
-print(len(Z1))
-print(len(Z2))
-print(len(Z3))
+print(standardised_returns.shape)
