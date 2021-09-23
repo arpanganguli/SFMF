@@ -84,7 +84,7 @@ mod = glm(formula, data=sys_df)
 res = mod.fit()
 
 res_c = mod.fit_constrained(
-    "sys_df['Z1'] + sys_df['Z2']  + sys_df['Z3'] = 1")
+    "sys_df['Z1'] + sys_df['Z2']  + sys_df['Z3'] <= 1")
 df['W1'] = res_c.params[1]
 df['W2'] = res_c.params[2]
 df['W3'] = res_c.params[3]
