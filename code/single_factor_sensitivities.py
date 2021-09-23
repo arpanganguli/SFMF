@@ -66,8 +66,7 @@ X_Banks = sm.add_constant(X_Banks)
 est_Banks = sm.OLS(y_Banks, X_Banks)
 est_Banks = est_Banks.fit()
 
-W_Banks_reg = est_Banks.params[0]
-print(est_Banks.summary())
+W_Banks_reg = np.sqrt(est_Banks.rsquared)
 print("W_Banks_reg: ", W_Banks_reg)
 
 y_Consumer_Goods = Consumer_Goods_standardised_returns
@@ -78,9 +77,7 @@ X_Consumer_Goods = sm.add_constant(X_Consumer_Goods)
 est_Consumer_Goods = sm.OLS(y_Consumer_Goods, X_Consumer_Goods)
 est_Consumer_Goods = est_Consumer_Goods.fit()
 
-W_Consumer_Goods_reg = est_Consumer_Goods.params[0]
-
-print("W_Consumer_Goods_reg: ", W_Consumer_Goods_reg)
+W_Consumer_Goods_reg = np.sqrt(est_Consumer_Goods.rsquared)
 
 y_REIT = REIT_standardised_returns
 X_REIT = np.full(len(REIT_standardised_returns), Z_REIT)
@@ -89,9 +86,7 @@ X_REIT = sm.add_constant(X_REIT)
 est_REIT = sm.OLS(y_REIT, X_REIT)
 est_REIT = est_REIT.fit()
 
-W_REIT_reg = est_REIT.params[0]
-
-print("W_REIT_reg: ", W_REIT_reg)
+W_REIT_reg = np.sqrt(est_REIT.rsquared)
 
 # Adding factor sensitivities to dataframe
 choices = [W_Banks_reg, W_Consumer_Goods_reg, W_REIT_reg]
