@@ -1,4 +1,4 @@
-"""This module generates factor sensitivities for the multi factor risk models. 
+"""This module calculates the systematic factor sensitivities for the multi factor model using Cholesky Decomposition followed by constrained multiple regression. 
     """
 # ==============================================================================================================================================
 
@@ -85,4 +85,8 @@ res = mod.fit()
 
 res_c = mod.fit_constrained(
     "sys_df['Z1'] + sys_df['Z2']  + sys_df['Z3'] = 1")
-print(res_c.summary())
+df['W1'] = res_c.params[1]
+df['W2'] = res_c.params[2]
+df['W3'] = res_c.params[3]
+
+df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities.csv'))

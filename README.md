@@ -16,7 +16,7 @@ The repository is arranged in following directories:
        2. Plot of the portfolio loss distribution;
        3. Value-at-Risk (VaR) for 90% and 99.9% confidence intervals;
        4. Expected Shortfall(ES) for 90% and 99.9% confidence intervals.
-    * **multi_factor_sensitivities.py:** this module calculates the systematic factor sensitivities for the multi factor model using Cholesky Decomposition.
+    * **multi_factor_sensitivities.py:** this module calculates the systematic factor sensitivities for the multi factor model using Cholesky Decomposition followed by constrained multiple regression.
     * **multi_factor_simulation.py:** this module generates the following -
        1. Portfolio loss based on the Multi Factor Model;
        2. Plot of the portfolio loss distribution;

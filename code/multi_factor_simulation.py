@@ -21,71 +21,15 @@ from numpy.random import normal
 
 HOME = os.getcwd()
 
-df = ImportedDataframe().import_sql_data(
-    'SFMF/data/database.db', 'SELECT * FROM PortfolioData')
-df.drop(df.index[100:999], inplace=True)
-covariance_matrix = ImportedDataframe().import_sql_data(
-    'SFMF/data/database.db', 'SELECT * FROM CovarianceMatrix')
-covariance_matrix.drop(covariance_matrix.index[3:999], inplace=True)
-covariance_matrix.drop(covariance_matrix.columns[0], axis=1, inplace=True)
+df = pd.read_csv('export/multi_factor_sensitivities.csv')
 
 # ==============================================================================================================================================
 
-# Cholesky decomposition of the covariance matrix
-covariance_array = covariance_matrix.to_numpy()
-lower_cholesky = cholesky(covariance_array, lower=True)
-
-num_of_factors = 3
-simulations = 100
-
-# generating random variables that will be used to determine the systematic factors
-sys_factors = list()
-
-for sim in range(simulations):
-    rand_num_list = list()
-    for i in range(num_of_factors):
-        rand_num = normal(loc=0.0, scale=1.0)
-        rand_num_list.append(rand_num)
-
-    rand_num_array = np.array(rand_num_list)
-    x = np.dot(lower_cholesky, rand_num_array)
-    sys_factors.append(x)
-
-correl_inter = list()
-for i in range(3):
-    correl_inter.append(float(covariance_array[i][i])/10.0)
-
-choices = [correl_inter[0], correl_inter[1], correl_inter[2]]
-conditions = [df['Sector'] == 'Banks', df['Sector']
-              == 'Consumer', df['Sector'] == 'Real Estate']
-
-df['Factor_Sensitivity'] = np.select(conditions, choices)
-
-
-df['W_Banks'] = correl_inter[0]
-df['W_Consumer_Goods'] = correl_inter[1]
-df['W_Real_Estate'] = correl_inter[2]
-
-df['Z1'] = ""
-df['Z2'] = ""
-df["Z3"] = ""
-
-for i in range(len(df)):
-    df['Z1'].loc[i] = sys_factors[i][0]
-    df['Z2'].loc[i] = sys_factors[i][1]
-    df['Z3'].loc[i] = sys_factors[i][2]
-
-# epsilon = generate_standard_normal_polar(50)
-# df["epsilon"] = epsilon
-
-df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities.csv'))
-
-# ==============================================================================================================================================
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
-simulations = 100
-cols = df.columns.drop(['epsilon', 'Sector'])
+simulations = 10_000
+cols = df.columns.drop(['Sector'])
 df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 
 for i in range(simulations):
@@ -93,10 +37,10 @@ for i in range(simulations):
     asset_value = list()
     for row in range(len(df)):
         epsilon = normal(loc=0.0, scale=1.0)
-        first_part = df['W_Banks'].loc[row]*df['Z1'].loc[row] + df['W_Consumer_Goods'].loc[row] * \
-            df['Z2'].loc[row] + df['W_Real_Estate'].loc[row]*df['Z3'].loc[row]
-        second_part = np.sqrt(1-(pow(df['W_Banks'].loc[row], 2) + pow(
-            df['W_Consumer_Goods'].loc[row], 2) + pow(df['W_Real_Estate'].loc[row], 2)))*epsilon
+        first_part = df['W1'].loc[row]*df['Z1'].loc[row] + df['W2'].loc[row] * \
+            df['Z2'].loc[row] + df['W3'].loc[row]*df['Z3'].loc[row]
+        second_part = np.sqrt(1-(pow(df['W1'].loc[row], 2) + pow(
+            df['W2'].loc[row], 2) + pow(df['W3'].loc[row], 2)))*epsilon
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
 
@@ -169,6 +113,5 @@ plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
 plt.title('Portfolio Loss Distribution (100 simulations) - Multi Factor')
-plt.savefig(os.path.join(HOME, 'export',
-            'multi_factor_PLD_100.png'))
+#plt.savefig(os.path.join(HOME, 'export', 'multi_factor_PLD_100.png'))
 plt.show()
