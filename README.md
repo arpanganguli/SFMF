@@ -57,6 +57,7 @@ Plots from the risk models (≥5,000 simulations):
 **NOTE:** These are all proxy data to represent sector returns.
 ## References
 * [An Explanatory Note on the Basel II IRB Risk Weight Functions](https://www.bis.org/bcbs/irbriskweight.htm)
+* [Basel II: The First Pillar - Minimum Capital Requirements](https://www.bis.org/publ/bcbs128b.pdf)
 * [Consolidating Multi-Factor Models of Systematic Risk with Regulatory Capital](https://www.math.kth.se/matstat/seminarier/reports/M-exjobb18/180601d.pdf)
 * [Credit Risk Modeling using Excel and VBA](https://www.wiley.com/en-gb/Credit+Risk+Modeling+using+Excel+and+VBA%2C+2nd+Edition-p-9780470660928)
 * [Modelling credit risk](https://www.bankofengland.co.uk/-/media/boe/files/ccbs/resources/modelling-credit-risk.pdf?la=en&hash=53B7332226FB2FB1B280B3D643DBB8AFF1FA5F32)
