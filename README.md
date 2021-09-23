@@ -62,4 +62,4 @@ Plots from the risk models (≥5,000 simulations):
 * [Credit Risk Modeling using Excel and VBA](https://www.wiley.com/en-gb/Credit+Risk+Modeling+using+Excel+and+VBA%2C+2nd+Edition-p-9780470660928)
 * [Modelling credit risk](https://www.bankofengland.co.uk/-/media/boe/files/ccbs/resources/modelling-credit-risk.pdf?la=en&hash=53B7332226FB2FB1B280B3D643DBB8AFF1FA5F32)
 * [Quantifying Portfolio Credit Risk](https://www.ccruncher.net/ccruncher.pdf)
-* [Quantitative Risk Management](https://press.princeton.edu/books/hardcover/9780691166278/quantitative-risk-management)8 
+* [Quantitative Risk Management](https://press.princeton.edu/books/hardcover/9780691166278/quantitative-risk-management)
