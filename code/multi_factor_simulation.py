@@ -28,7 +28,7 @@ df = pd.read_csv('export/multi_factor_sensitivities.csv')
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
-simulations = 10_000
+simulations = 50_000
 cols = df.columns.drop(['Sector'])
 df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 
@@ -112,6 +112,6 @@ plt.axvline(ES_999, color='red')
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (10,000 simulations) - Multi Factor')
+plt.title('Portfolio Loss Distribution (50,000 simulations) - Multi Factor')
 #plt.savefig(os.path.join(HOME, 'export', 'multi_factor_PLD_100.png'))
 plt.show()
