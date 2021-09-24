@@ -89,4 +89,10 @@ df['W1'] = res_c.params[1]
 df['W2'] = res_c.params[2]
 df['W3'] = res_c.params[3]
 
+"""Calculate adj. R-Square:
+sst = sum(map(lambda x: np.power(x,2),y-np.mean(y))) 
+sse = sum(map(lambda x: np.power(x,2),your_model.resid_response)) 
+r2 = 1.0 - sse/sst
+"""
+
 df.to_csv(os.path.join(HOME, 'export', 'multi_factor_sensitivities.csv'))
