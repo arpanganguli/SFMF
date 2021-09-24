@@ -7,6 +7,7 @@
 # ==============================================================================================================================================
 
 # import relevant packages and files
+from __init__ import ImportedDataframe
 import os
 import numpy as np
 import pandas as pd
@@ -15,13 +16,19 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.linalg import cholesky
-from __init__ import ImportedDataframe, generate_standard_normal_polar
 from numpy.random import normal
+from scipy.linalg import cholesky
 
 
 HOME = os.getcwd()
 
 df = pd.read_csv('export/multi_factor_sensitivities.csv')
+
+
+covariance_matrix = ImportedDataframe().import_sql_data(
+    'SFMF/data/database.db', 'SELECT * FROM CovarianceMatrix')
+covariance_matrix.drop(covariance_matrix.index[3:999], inplace=True)
+covariance_matrix.drop(covariance_matrix.columns[0], axis=1, inplace=True)
 
 # ==============================================================================================================================================
 
@@ -31,6 +38,9 @@ PORTFOLIO_LOSS = list()
 simulations = 50_000
 cols = df.columns.drop(['Sector'])
 df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
+
+covariance_array = covariance_matrix.to_numpy()
+lower_cholesky = cholesky(covariance_array, lower=True)
 
 for i in range(simulations):
 
