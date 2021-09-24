@@ -45,15 +45,6 @@ for i in range(simulations):
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
 
-        """ALITER.
-        first_part = np.sqrt(df['Factor_Sensitivity'].loc[row]) * \
-            (df['Z1'].loc[row] + df['Z2'].loc[row] + df['Z3'].loc[row])
-        second_part = np.sqrt(
-            1-df['Factor_Sensitivity'].loc[row]) * epsilon
-        asset_value_i = first_part + second_part
-        asset_value.append(asset_value_i)
-        """
-
     df['Asset_Value'] = asset_value
 
     default = list()
