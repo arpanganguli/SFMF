@@ -28,7 +28,7 @@ df = pd.read_csv('export/multi_factor_sensitivities.csv')
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
-simulations = 50_000
+simulations = 10_000
 cols = df.columns.drop(['Sector'])
 df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 
@@ -37,10 +37,11 @@ for i in range(simulations):
     asset_value = list()
     for row in range(len(df)):
         epsilon = normal(loc=0.0, scale=1.0)
-        first_part = df['W1'].loc[row]*df['Z1'].loc[row] + df['W2'].loc[row] * \
-            df['Z2'].loc[row] + df['W3'].loc[row]*df['Z3'].loc[row]
-        second_part = np.sqrt(1-(pow(df['W1'].loc[row], 2) + pow(
-            df['W2'].loc[row], 2) + pow(df['W3'].loc[row], 2)))*epsilon
+        first_part = df['Factor_Senstivity_rsq_1'].loc[row]*df['Z1'].loc[row] + df['Factor_Senstivity_rsq_2'].loc[row] * \
+            df['Z2'].loc[row] + \
+            df['Factor_Senstivity_rsq_3'].loc[row]*df['Z3'].loc[row]
+        second_part = np.sqrt(1-(pow(df['Factor_Senstivity_rsq_1'].loc[row], 2) + pow(
+            df['Factor_Senstivity_rsq_2'].loc[row], 2) + pow(df['Factor_Senstivity_rsq_3'].loc[row], 2)))*epsilon
         asset_value_i = first_part + second_part
         asset_value.append(asset_value_i)
 
@@ -112,6 +113,6 @@ plt.axvline(ES_999, color='red')
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (50,000 simulations) - Multi Factor')
+plt.title('Portfolio Loss Distribution (10,000 simulations) - Multi Factor')
 #plt.savefig(os.path.join(HOME, 'export', 'multi_factor_PLD_100.png'))
 plt.show()
