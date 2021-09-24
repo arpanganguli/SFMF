@@ -31,8 +31,8 @@ for i in range(simulations):
     asset_value = list()
     for row in range(len(df)):
         epsilon = normal(loc=0.0, scale=1.0)
-        asset_value.append(df['Factor_Sensitivity_MLE'].loc[row]*Z +
-                           np.sqrt(1-pow(df['Factor_Sensitivity_MLE'].loc[row], 2))*epsilon)
+        asset_value.append(df['Factor_Sensitivity_rsq'].loc[row]*Z +
+                           np.sqrt(1-pow(df['Factor_Sensitivity_rsq'].loc[row], 2))*epsilon)
 
     df['Asset_Value'] = asset_value
 
@@ -95,6 +95,5 @@ plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
 plt.title('Portfolio Loss Distribution (50,000 simulations) - Single Factor')
-plt.savefig(os.path.join(HOME, 'export',
-            'portfolio_loss_distribution_50000.png'))
+# plt.savefig(os.path.join(HOME, 'export', 'portfolio_loss_distribution_50000.png'))
 plt.show()
