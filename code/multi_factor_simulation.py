@@ -35,7 +35,7 @@ covariance_matrix.drop(covariance_matrix.columns[0], axis=1, inplace=True)
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
 
-simulations = 50_000
+simulations = 10_000
 cols = df.columns.drop(['Sector'])
 df[cols] = df[cols].apply(pd.to_numeric, errors='coerce')
 
@@ -43,13 +43,27 @@ covariance_array = covariance_matrix.to_numpy()
 lower_cholesky = cholesky(covariance_array, lower=True)
 
 for i in range(simulations):
+    sys_factors = list()
+    num_of_factors = 3
+    Z1 = lower_cholesky*normal(loc=0.0, scale=1.0)
+    simulations = 100
+
+    for sim in range(simulations):
+        rand_num_list = list()
+        for i in range(num_of_factors):
+            rand_num = normal(loc=0.0, scale=1.0)
+            rand_num_list.append(rand_num)
+
+        rand_num_array = np.array(rand_num_list)
+        x = np.dot(lower_cholesky, rand_num_array)
+        sys_factors.append(x)
 
     asset_value = list()
     for row in range(len(df)):
         epsilon = normal(loc=0.0, scale=1.0)
-        first_part = df['Factor_Senstivity_rsq_1'].loc[row]*df['Z1'].loc[row] + df['Factor_Senstivity_rsq_2'].loc[row] * \
-            df['Z2'].loc[row] + \
-            df['Factor_Senstivity_rsq_3'].loc[row]*df['Z3'].loc[row]
+        first_part = df['Factor_Senstivity_rsq_1'].loc[row]*sys_factors[row][0] + \
+            df['Factor_Senstivity_rsq_2'].loc[row]*sys_factors[row][1] + \
+            df['Factor_Senstivity_rsq_3'].loc[row]*sys_factors[row][2]
         second_part = np.sqrt(1-(pow(df['Factor_Senstivity_rsq_1'].loc[row], 2) + pow(
             df['Factor_Senstivity_rsq_2'].loc[row], 2) + pow(df['Factor_Senstivity_rsq_3'].loc[row], 2)))*epsilon
         asset_value_i = first_part + second_part
@@ -114,6 +128,6 @@ plt.axvline(ES_999, color='red')
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (50,000 simulations) - Multi Factor')
+plt.title('Portfolio Loss Distribution (10,000 simulations) - Multi Factor')
 #plt.savefig(os.path.join(HOME, 'export', 'multi_factor_PLD_100.png'))
 plt.show()
