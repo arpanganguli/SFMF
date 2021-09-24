@@ -23,7 +23,7 @@ df = pd.read_csv('export/single_factor_sensitivities.csv', index_col=0)
 
 # Monte Carlo simulation
 PORTFOLIO_LOSS = list()
-simulations = 50_000
+simulations = 10_000
 
 for i in range(simulations):
 
@@ -95,6 +95,7 @@ plt.axvline(ES_999, color='red')
 plt.text(ES_999, -0.4, 'ES 99.9%', rotation=90)
 plt.xlabel('Portfolio Loss')
 plt.ylabel('Frequency')
-plt.title('Portfolio Loss Distribution (50,000 simulations) - Single Factor')
-# plt.savefig(os.path.join(HOME, 'export', 'portfolio_loss_distribution_50000.png'))
+plt.title('Portfolio Loss Distribution (10,000 simulations) - Single Factor')
+plt.savefig(os.path.join(HOME, 'export',
+            'single_factor_PLD_10000.png'))
 plt.show()
